@@ -40,3 +40,9 @@ templates = Jinja2Templates(directory="templates")
 app.include_router(users.router, prefix="/api/users", tags=["users"])
 app.include_router(posts.router, prefix="/api/records", tags=["records"])
 app.include_router(posts.router, prefix="/api/metadata", tags=["metadata"])
+
+
+@app.get("/", include_in_schema=False, name="home")
+async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    return templates.TemplateResponse(request, "home.html", {"title": "Home"})
