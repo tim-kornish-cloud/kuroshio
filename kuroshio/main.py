@@ -47,6 +47,16 @@ async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
 
     return templates.TemplateResponse(request, "home.html", {"title": "Home"})
 
+@app.get("/metadata", include_in_schema=False, name="metadata")
+async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    return templates.TemplateResponse(request, "metadata.html", {"title": "Metadata"})
+
+@app.get("/records", include_in_schema=False, name="records")
+async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
+    
+    return templates.TemplateResponse(request, "records.html", {"title": "Records"})
+
 @app.get("/login", include_in_schema=False)
 async def login_page(request: Request):
     return templates.TemplateResponse(
