@@ -7,7 +7,7 @@ Description: Set up schemas for users, record queries and metadata
 
              In the future add class for metadata deployment
              can also set up pooled connection to salesforce
-             for migrating records in iterative scripts. 
+             for migrating records in iterative scripts.
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(200), nullable=False)
 
-    record_query: Mapped[list[Record_Query]] = relationship(
+    record_query: Mapped[list[RecordQuery]] = relationship(
         back_populates="author",
         cascade="all, delete-orphan",
     )
