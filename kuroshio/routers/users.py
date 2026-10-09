@@ -7,7 +7,6 @@ Description:
 from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
-from botocore.exceptions import ClientError
 from fastapi import (
     APIRouter,
     BackgroundTasks,
@@ -18,7 +17,6 @@ from fastapi import (
     status,
 )
 from fastapi.security import OAuth2PasswordRequestForm
-from PIL import UnidentifiedImageError
 from sqlalchemy import delete as sql_delete
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
