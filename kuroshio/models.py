@@ -1,7 +1,13 @@
 """
 Author: Timothy Kornish
 CreatedDate: October 8 -2026
-Description:
+Description: Set up schemas for users, record queries and metadata
+             queries to save past queries for future use.
+             Also include a password reset token class.
+
+             In the future add class for metadata deployment
+             can also set up pooled connection to salesforce
+             for migrating records in iterative scripts. 
 """
 
 from __future__ import annotations
