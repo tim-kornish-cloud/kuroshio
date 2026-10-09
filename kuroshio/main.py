@@ -38,11 +38,100 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(users.router, prefix="/api/users", tags=["users"])
-app.include_router(posts.router, prefix="/api/records", tags=["records"])
-app.include_router(posts.router, prefix="/api/metadata", tags=["metadata"])
+app.include_router(records.router, prefix="/api/records", tags=["records"])
+app.include_router(metadata.router, prefix="/api/metadata", tags=["metadata"])
 
 
 @app.get("/", include_in_schema=False, name="home")
 async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
 
     return templates.TemplateResponse(request, "home.html", {"title": "Home"})
+
+@app.get("/login", include_in_schema=False)
+async def login_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "login.html",
+        {"title": "Login"},
+    )
+
+@app.get("/register", include_in_schema=False)
+async def register_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "register.html",
+        {"title": "Register"},
+    )
+
+@app.get("/account", include_in_schema=False)
+async def account_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "account.html",
+        {"title": "Account"},
+    )
+
+
+@app.get("/forgot-password", include_in_schema=False)
+async def forgot_password_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "forgot_password.html",
+        {"title": "Forgot Password"},
+    )
+
+
+@app.get("/reset-password", include_in_schema=False)
+async def reset_password_page(request: Request):
+    response = templates.TemplateResponse(
+        request,
+        "reset_password.html",
+        {"title": "Reset Password"},
+    )
+    response.headers["Referrer-Policy"] = "no-referrer"
+    return response
+
+
+@app.exception_handler(StarletteHTTPException)
+async def general_http_exception_handler(
+    request: Request,
+    exception: StarletteHTTPException,
+):
+    if request.url.path.startswith("/api"):
+        return await http_exception_handler(request, exception)
+
+    message = (
+        exception.detail
+        or "An error occurred. Please check your request and try again."
+    )
+
+    return templates.TemplateResponse(
+        request,
+        "error.html",
+        {
+            "status_code": exception.status_code,
+            "title": exception.status_code,
+            "message": message,
+        },
+        status_code=exception.status_code,
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request,
+    exception: RequestValidationError,
+):
+    if request.url.path.startswith("/api"):
+        return await request_validation_exception_handler(request, exception)
+
+    return templates.TemplateResponse(
+        request,
+        "error.html",
+        {
+            "status_code": status.HTTP_422_UNPROCESSABLE_CONTENT,
+            "title": status.HTTP_422_UNPROCESSABLE_CONTENT,
+            "message": "Invalid request. Please check your input and try again.",
+        },
+        status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+    )
