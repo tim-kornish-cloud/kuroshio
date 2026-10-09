@@ -77,6 +77,19 @@
                                aria-current="page"
                                href="{{ url_for("home") }}">Home</a>
                         </div>
+                        <!-- add link for metadata query page -->
+                        <div class="navbar-nav me-auto">
+                            <a class="nav-link active"
+                               aria-current="page"
+                               href="{{ url_for("metadata") }}">Metadata</a>
+                        </div>
+                        <!-- add link for record query page -->
+                        <div class="navbar-nav me-auto">
+                            <a class="nav-link active"
+                               aria-current="page"
+                               href="{{ url_for("records") }}">Records</a>
+                        </div>
+
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             <!-- Shown when logged in (hidden by default, shown via JS) -->
