@@ -1,7 +1,7 @@
 """
 Author: Timothy Kornish
 CreatedDate: October 8 -2026
-Description:
+Description: set up config login credentials and token values
 """
 
 from pydantic import SecretStr
