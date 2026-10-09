@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     reset_token_expire_minutes: int = 60
 
+    # forgotten password email values
     mail_server: str = "localhost"
     mail_port: int = 587
     mail_username: str = ""
@@ -30,5 +31,12 @@ class Settings(BaseSettings):
     mail_use_tls: bool = True
 
     frontend_url: str = "http://localhost:8000"
+
+    # Salesforce values
+    Username: str
+    Password: str
+    Token: str
+    URL: str
+    SOAP_API: str
 
 settings = Settings()  # type: ignore[call-arg] # Loaded from .env file
